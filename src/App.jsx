@@ -1,16 +1,26 @@
+import { Route, Router, Routes } from 'react-router-dom'
 import './App.css'
-import ProductCard from './components/productCard'
+import HomePage from './pages/homePage'
+import LoginPage from './pages/loginpage'
+import RegisterPage from './pages/registerPage'
+import AdminPage from './pages/adminPage'
 
 function App() {
   
 
   return (
-    <>
-    <ProductCard name="Mac Book Air 256GB" price="255,000.00" image="https://picsum.photos/id/1/200/300" alt="Mac Book Air"/>
-    <ProductCard name="Apple iphone 6s" price="150,000.00" image="https://picsum.photos/id/3/200/300" alt="Iphone 6s"/>
-    <ProductCard name="Samsung Watch" price="50,000.00" image="https://picsum.photos/id/4/200/300" alt="Samsung watch"/>
-    </>
-  )
+    <div className="w-full h-screen ">
+    <Routes>
+      <Route path='/' element={<HomePage/>}/>
+      
+      <Route path='/signin' element={<LoginPage/>}/>
+
+      <Route path='/signup'element={<RegisterPage/>}/>
+
+      <Route path='/admin/*' element={<AdminPage/>} />
+    </Routes>
+    </div>
+  ) 
 }
 
 export default App
