@@ -1,27 +1,40 @@
 import React from 'react'
+import { BsGift } from 'react-icons/bs'
+import { FiShoppingCart } from 'react-icons/fi'
+import { TbUsers } from 'react-icons/tb'
 import { Link, Route, Routes } from 'react-router-dom'
+import AdminProductsPage from './admin/adminProductsPage'
 
 export default function AdminPage() {
   return (
-    <div className='w-full h-full flex'>
+    <div className='w-full h-full flex bg-primary'>
 
-      <div className='w-75 h-full bg-white flex flex-col'>
-      
-      <h1 className='w-full h-12.5 bg-gray-400 text-xl font-bold'>Using Anchor Tags</h1>
-        <a className='w-25 h-12.5 bg-blue-400 m-3 text-center' href='/admin/'>Orders</a>
-        <a className='w-25 h-12.5 bg-blue-400 m-3 text-center' href='/admin/products'>Products</a>
-        <a className='w-25 h-12.5 bg-blue-400 m-3 text-center' href='/admin/users'>Users</a>
+      <div className='w-75 h-full bg-white flex flex-col shadow-2xl'>
+        <div className="w-full h-25 py-4 px-2">
+          
+          <img src="/logo.png" alt="Logo" className="h-full "/>
 
-      <h1 className='w-full h-12.5 bg-gray-400 text-xl font-bold'>Using Link Component</h1>
-      <Link className='w-full h-12.5 bg-blue-400 m-3 text-center' to='/admin/'>Orders</Link>
-      <Link className='w-full h-12.5 bg-blue-400 m-3 text-center' to='/admin/products'>Products</Link>
-      <Link className='w-full h-12.5 bg-blue-400 m-3 text-center' to='/admin/users'>Users</Link>
+        </div>
+        <Link to="/admin" className="w-full p-4 text-xl text-gray-500 flex items-center gap-4">
+          <FiShoppingCart />
+          <span className="w-full h-full block ">Orders</span>
+        </Link>
+
+        <Link to="/admin/products" className="w-full p-4 text-xl text-gray-500 flex items-center gap-4">
+          <BsGift />
+          <span className="w-full h-full block ">Products</span>
+        </Link>
+
+        <Link to="/admin/users" className="w-full p-4 text-xl text-gray-500 flex items-center gap-4">
+          <TbUsers />
+          <span className="w-full h-full block ">Users</span>
+        </Link>
       </div>
 
-      <div className='w-[calc(100%-300px)] h-full bg-amber-200 '>
+      <div className='w-[calc(100%-300px)] h-full p-4'>
         <Routes>
           <Route path='/' element={<h1>Order Page</h1>}/>
-          <Route path='/products' element={<h1>Products Page</h1>}/>
+          <Route path='/products' element={<AdminProductsPage/>}/>
           <Route path='/users' element={<h1>Users Page</h1>}/>
         </Routes>
 

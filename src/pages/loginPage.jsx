@@ -1,29 +1,55 @@
-import axios from 'axios'
 import React, { useState } from 'react'
 import toast from 'react-hot-toast'
 import { FcGoogle } from 'react-icons/fc'
 import { MdEmail, MdKey } from 'react-icons/md'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
+import api from '../utils/api'
 
 export default function LoginPage() {
 
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
+  const [loading, setLoading] = useState(false)
+  const navigate = useNavigate()
 
   async function handleLogin(){
-    toast.success("Email: "+email +" Password: "+password)
+
+    setLoading(true)
+
     try{
-      const res= await axios.post("http://localhost:3000/users/login",
+      // const res= await axios.post("http://localhost:3000/users/login",
+      //   {
+      //     email: email,
+      //     password: password
+      //   })
+      const res = await api.post("/users/login",
         {
           email: email,
           password: password
         })
-      console.log(res)
+
+        localStorage.setItem("token", res.data.token)
+
+        if(res.data.isAdmin){
+
+          // window.location.href="/admin"
+          navigate("/admin")
+
+        }else{
+
+          // window.location.href="/"
+          navigate("/")
+
+        }
+      
+      console.log(res.data)
+      toast.success(res.data.message)
 
     } catch (err) {
-      console.log(err)
-      toast.error("Login Failed")
+
+      toast.error(err?.response?.data?.message || "Login failed")
     }
+    setLoading(false)
   }
   return (
     <div className="w-full h-full bg-[url('/login-bg.jpg')] bg-cover bg-no-repeat flex justify-center items-center">
@@ -58,7 +84,9 @@ export default function LoginPage() {
       <p className="w-full h-2 text-white text-right italic">Forget your password? Click 
         <Link to="/forget-password" className="font-bold text-accent">Here</Link></p>
 
-      <button className="w-full h-12.5 bg-accent text-white rounded-lg mt-10" onClick={handleLogin}>Sign In</button>
+      <button disabled={loading} className="w-full h-12.5 bg-accent text-white rounded-lg mt-10" onClick={handleLogin}>
+        {loading ? "Loading..." : "Login"}
+      </button>
 
       <p className="w-full h-2 text-white text-right italic mt-0.5">Don't have an account? Click 
         <Link to="/register" className="font-bold text-accent">Here</Link></p>
